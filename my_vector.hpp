@@ -20,10 +20,17 @@ public:
 public:
     Vector(const Allocator& = Allocator()) : size(0), capacity(1), arr(new T[1]) {
         arr[0] = N;
+        // std::cout << "Vector()" << std::endl;
     }
     Vector(size_t cols) : size(cols), capacity(cols), arr(new T[cols]) {
         for(size_t j = 0; j < size; ++j) arr[j] = N;
-        // std::cout << "Matrix " << 1 << std::endl;
+        // std::cout << "Vector(size_t cols)" << std::endl;
+    }
+    ~Vector() {
+        // std::cout << "~Vector()" << std::endl;
+        for (size_t i = 0; i < capacity; ++i) {
+            base_alloc::destroy(alloc, &arr[i]);
+        }
     }
     void push_back(T&& element) {
         if (size == capacity) {
@@ -32,7 +39,7 @@ public:
         arr[size] = std::move(element);
         size++;
     }
-    virtual void reserve(size_t am) {
+    void reserve(size_t am) {
         if(am <= capacity) {
             return;
         } else {
@@ -48,7 +55,8 @@ public:
             arr = temp;
         }
     }
-    virtual T& operator[](size_t i) {
+    T& operator[](size_t i) {
+        i_ = i;
         if(empty()) {
             reserve(2 * capacity);
             ++size;
@@ -83,9 +91,10 @@ public:
 private:
     size_t size = 0;
     size_t capacity = 0;
-private:
     pointer arr;
     Allocator alloc;
+public:
+    size_t i_ = 0;
 };
 
 
