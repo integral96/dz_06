@@ -68,6 +68,28 @@ public:
         assert(!empty());
         return arr[i];
     }
+    void print_sub_mtrx(const std::initializer_list<int>& pair) const {
+        auto row_p_ = std::make_pair(*pair.begin(), *(pair.begin() + 1));
+        std::cout << " ";
+        for (size_t k = row_p_.first; k < row_p_.second; ++k)
+            std::cout << (*this)[k] << " ";
+        std::cout << std::endl;
+    }
+    size_t size_no_empty() const {
+        size_t count = 0;
+        for (size_t k = 0; k < size; ++k)
+            if((*this)[k] != T(0)) count++;
+        return count;
+    }
+    template <typename... Args>
+    void print_no_empty(Args&&... args) const {
+        for (size_t k = 0; k < size; ++k)
+            if((*this)[k] != T(0)) {
+                std::cout << "value = " << (*this)[k] << "; index = {" << k;
+                ((std::cout << ',' << std::forward<Args>(args)), ...);
+                std::cout << "}\n";
+            }
+   }
     iterator begin() const {
         return (iterator(&arr[0]));
     }
