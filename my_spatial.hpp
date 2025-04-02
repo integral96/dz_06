@@ -5,22 +5,6 @@
 
 #include "my_vector.hpp"
 
-template<class T, class... Policies>
-class X {
-    using type = std::pair<size_t, size_t>;
-};
-
-template<template<typename...> class t, typename def, typename... a>
-struct give_default {
-    using type = t<a...>;
-};
-template<template<typename...> class t, typename def>
-struct give_default<t, def> {
-    using type = t<def>;
-};
-
-template<typename... t>
-using X_with_default = typename give_default<X, std::pair<size_t, size_t>, t...>::type;
 
 template<typename T, int N, int M>
 class Matrix : public std::unique_ptr<Matrix<T, N, M - 1>[]> {
