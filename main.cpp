@@ -25,31 +25,38 @@ int main()
     }
     size_t cols = 10;
     size_t rows = 10;
-    Matrix<int, -1, 2> matrix1(cols, rows);
+    Matrix<int, 0, 2> matrix1(cols, rows);
     for (size_t i = 0; i < cols; ++i) {
         matrix1[i][i] = i;
         matrix1[i][(rows - 1) - i] = (rows - 1) - i;
     }
     std::cout << "\nmatrix2D = \n" << matrix1 << std::endl;
+    std::cout << "подматрица matrix2D = \n" << std::endl;
+    matrix1.print_sub_mtrx({1, 9}, {1, 9});
+    std::cout << "\n выведем количество занятых ячеек matrix2D = " << matrix1.size_no_empty() << std::endl;
+    std::cout << "все занятые ячейки вместе со своими позициями matrix2D = \n" << std::endl;
+    matrix1.print_no_empty();
     size_t N1 = 3;
     size_t N2 = 3;
     size_t N3 = 3;
     size_t N4 = 3;
-    Matrix<int, 0, 4> matrix4(N1, N2, N3, N4);
-    for (size_t k = 0; k < N1; ++k)
-    for (size_t i = 0; i < N1; ++i)
-    for (size_t j = 0; j < N1; ++j) {
-       matrix4[k][i][j][j] = j + 1;
-       matrix4[k][i][j][(N1 - 1) - j] = (N1 - 1) - j + 1;
-    }
-    std::cout << "\nmatrix4D =\n" << matrix4 << std::endl;
-
     size_t N5 = 3;
-    size_t N6 = 3;
-    size_t N7 = 3;
-
-    Matrix<int, -1, 7> matrix7(N1, N2, N3, N4, N5, N6, N7);
-    std::cout << "\nmatrix7D =\n" << matrix7 << std::endl;
+    Matrix<int, 0, 5> matrix5(N1, N2, N3, N4, N5);
+    for (size_t k = 0; k < N1; ++k)
+    for (size_t i = 0; i < N2; ++i)
+    for (size_t j = 0; j < N3; ++j) {
+        for (size_t l = 0; l < N4; ++l) {
+            matrix5[k][i][j][l][l] = l + 1;
+            matrix5[k][i][j][l][(N4 - 1) - l] = (N4 - 1) - l + 1;
+        }
+    }
+    std::cout << "\nmatrix5D =\n" << matrix5 << std::endl;
+    std::cout << "print sub matrix5D =\n" << std::endl;
+    auto dd = {0, 2};
+    matrix5.print_sub_mtrx(dd, dd, dd, dd, dd);
+    std::cout << "\n выведем количество занятых ячеек matrix5D = " << matrix5.size_no_empty() << std::endl;
+    std::cout << "все занятые ячейки вместе со своими позициями matrix5D = \n" << std::endl;
+    matrix5.print_no_empty();
 
     return 0;
 }
